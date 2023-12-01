@@ -79,12 +79,30 @@
           </q-btn-dropdown>
           <!-- Las otras opciones -->
           <q-btn to="/dashboard/Servicio" flat label="Servicios" icon="build" />
-          <q-btn
-            to="/dashboard/facturas"
-            flat
-            label="Facturas"
-            icon="receipt"
-          />
+          <q-btn-dropdown stretch flat label="Facturas" icon="receipt">
+            <q-list>
+              <q-item clickable to="/dashboard/factura">
+                <q-item-section avatar>
+                  <q-avatar
+                    icon="receipt"
+                    color="secondary"
+                    text-color="white"
+                  />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>Generar Factura</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable to="/dashboard/histFact">
+                <q-item-section avatar>
+                  <q-avatar icon="history" color="primary" text-color="white" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>Historial Factura</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
           <q-btn
             to="/dashboard/inventario"
             flat
