@@ -11,12 +11,12 @@
                 label="Fabricante"
             />
             <q-input v-model="nuevoV.modelo" label="Modelo" class="custom-label" />
-            <!-- <q-input v-model="nuevoV.anio" label="Año" class="custom-label" /> -->
-            <q-select 
+            <q-input v-model="nuevoV.anio" label="Año" class="custom-label" />
+            <!-- <q-select 
                 v-model="nuevoV.anio"
                 :options= generateYears(1994,2023)
                 label="Año"
-            />
+            /> -->
             <q-input v-model="nuevoV.numeroPlaca" label="Número de Placa" class="custom-label" Placeholder="AAA123"/>
             <!-- <q-input v-model="nuevoV.clienteId" label="Codigo Cliente" class="custom-label" /> -->
             <!-- <q-input v-model="nuevoV.clienteId" label="Cliente" class="custom-label"> -->
@@ -76,6 +76,7 @@
 
 
 <script>
+import { Notify } from 'quasar'
 import axios from 'axios'
 export default{
     data() {
@@ -132,7 +133,7 @@ export default{
                 numeroPlaca: this.nuevoV.numeroPlaca,
                 clienteId: this.nuevoV.clienteId.clienteId
             }
-            //console.log(data)
+            console.log(data)
             //peticion post
             axios.post(url,data)
                     .then(reponse => {
@@ -150,7 +151,7 @@ export default{
                             timeout: 10000
                         })
                     })     
-            location.reload();
+            //location.reload();
             this.cerrarModal();
         } catch (error) {
             console.error('Error al actualizar:', error);
