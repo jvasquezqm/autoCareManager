@@ -19,6 +19,10 @@ const routes = [
         path: "inventario",
         component: () => import("pages/GestionInventario.vue"),
       },
+      {
+        path: "reportes",
+        component: () => import("pages/ReporteACM.vue"),
+      },
     ],
   },
   {
