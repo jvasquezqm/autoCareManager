@@ -1,3 +1,4 @@
+<!-- Pagina FacturaPage.vue -->
 <template>
   <div class="factura-page">
     <div class="content-container">

@@ -1,3 +1,4 @@
+<!-- Componenten ServiceTable.vue -->
 <template>
   <div>
     <q-table :rows="servicios" :columns="columns" row-key="id" />
@@ -20,16 +21,10 @@ export default {
           field: "descripcion",
         },
         {
-          name: "precioUnitario",
-          label: "Precio Unitario",
+          name: "costo",
+          label: "Precio",
           align: "left",
-          field: "precioUnitario",
-        },
-        {
-          name: "precioTotal",
-          label: "Precio Total",
-          align: "left",
-          field: "precioTotal",
+          field: "costo",
         },
       ],
     };

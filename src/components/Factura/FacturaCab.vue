@@ -1,3 +1,4 @@
+<!-- Componente FacturaCab.vue -->
 <template>
   <div class="q-page q-pa-md">
     <div class="items-center">
@@ -76,6 +77,7 @@ export default {
   },
   watch: {
     clienteSeleccionado: function (newClienteId, oldClienteId) {
+      console.log("clienteSeleccionado", newClienteId);
       if (newClienteId) {
         this.obtenerServiciosxClient(newClienteId);
       } else {
@@ -103,16 +105,17 @@ export default {
     obtenerServiciosxClient(clienteId) {
       axios
         .get(
-          `http://localhost:5243/api/Servicio/GetServiciosxCliente?clienteId=${clienteId}`
+          `http://localhost:5243/api/RepMantenimiento/GetReparacByClientId?idClient=${clienteId.value}`
         )
         .then((response) => {
           this.servicios = response.data.map((servicio) => ({
-            label: `${servicio.servicioId} - ${servicio.descripcion}`,
-            value: servicio.servicioId,
+            label: `${servicio.descripcion}`,
+            value: servicio.reparacionMantenimientoId,
           }));
         })
         .catch((error) => {
           console.log("error al obtener servicios", error);
+          console.log("clienteId pp", clienteId.value);
         });
     },
   },
