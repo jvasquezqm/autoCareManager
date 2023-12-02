@@ -1,4 +1,5 @@
 <template>
+  <div class="contenedor">
   <q-page>
     <q-container class="q-mb-md">
       <q-select
@@ -14,9 +15,13 @@
       <component :is="selectedChart" />
     </div>
   </q-page>
+</div>
 </template>
 
 <style scoped>
+.contenedor{
+  margin-top: 3%;
+}
 /* Ajusta el ancho del gráfico */
 .BarChart {
   width: 100%; /* Haz ajustes según sea necesario */
