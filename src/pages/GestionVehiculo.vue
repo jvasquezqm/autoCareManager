@@ -15,10 +15,12 @@
 .vehiculo-page{
 
     justify-content: space-between;
+    position: sticky;
 }
 .titulo {
     text-align: center;
     width: 100%;
+    
 }
 
 .agregar {

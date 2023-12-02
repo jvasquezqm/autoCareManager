@@ -2,47 +2,71 @@
 <template>
   <div>
     <VehiculoEditar ref="VehiculoEditar"/>
+    <div class="table-container">
+      <q-table
+        :rows="datosFiltrados"
+        :columns="columns"
+        row-key="vehiculoId"
+        :rows-per-page-options="[10,50,100]"
+        class="scroll-table"
 
-    <q-table
-      :rows="datosFiltrados"
-      :columns="columns"
-      row-key="vehiculoId"
-      :rows-per-page-options="[10,50,100]"
+      >
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td v-for="columna in columns" :key="columna.field" align="left">
+              <template v-if="columna.field !== 'acciones'">
+                {{ celda(props.row, columna) }}
+              </template>
 
-    >
-
-
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td v-for="columna in columns" :key="columna.field" align="left">
-            <template v-if="columna.field !== 'acciones'">
-              {{ celda(props.row, columna) }}
-            </template>
-
-            <template v-else>
-              <q-btn @click="editarFila(props.row)" icon="edit"  flat color="primary" />
-              <q-btn @click="eliminarFila(props.row)" icon="delete" flat color="negative" />
-            </template>
-          </q-td>
-        </q-tr>
-      </template>
-
+              <template v-else>
+                <q-btn @click="editarFila(props.row)" icon="edit"  flat color="primary" />
+                <q-btn @click="eliminarFila(props.row)" icon="delete" flat color="negative" />
+              </template>
+            </q-td>
+          </q-tr>
+        </template>
 
 
-      <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="busqueda" placeholder="Busqueda">
-            <template v-slot:append>
-                <q-icon name="search"></q-icon>
-            </template>
-          </q-input>
-      </template>
-    </q-table>
+
+        <template v-slot:top-right>
+            <q-input borderless dense debounce="300" v-model="busqueda" placeholder="Busqueda">
+              <template v-slot:append>
+                  <q-icon name="search"></q-icon>
+              </template>
+            </q-input>
+        </template>
+      </q-table>
+    </div>
   </div>
 </template>
 
 
 <style>
+.table-container {
+  position: relative;
+  overflow: hidden;
+}
+.scroll-table {
+  max-height: 600px; /* ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+}
 
+.q-table .q-table__top,
+.q-table .q-th {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* ajusta el color de fondo según tu diseño */
+  z-index: 1;
+}
+
+/* Fijar el buscador a la derecha */
+.q-table .q-field--dense {
+  position: sticky;
+  top: 0;
+  right: 0;
+  background-color: #fff; /* ajusta el color de fondo según tu diseño */
+  z-index: 1;
+}
 </style>
 
 
@@ -75,7 +99,7 @@ export default{
         { name: 'cliente', align: 'center', label: 'Cod. Cliente', field: 'clienteId', sortable: true },
         { name: 'cliente', align: 'left', label: 'Cliente', field: 'cliente', sortable: true },
         { name: 'acciones', align: 'center', label: 'Acciones', field: 'acciones', sortable: false},
-      ]
+      ],
     }
   },
 
