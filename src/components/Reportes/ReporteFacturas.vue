@@ -49,14 +49,14 @@
   
         // Transforma los datos en el formato adecuado para vue-chartjs
         this.chartData = {
-          labels: data.map(item => item.facturaId),
+          labels: data.map(item => "F-0" + item.facturaId),
           datasets: [
             {
               label: 'Reporte Facturas Generadas',
               backgroundColor: 'rgba(54, 162, 235, 0.4)', // Azul claro
               borderColor: 'rgba(54, 162, 235, 1)', // Azul oscuro
-              borderWidth: 1,
-              data: data.map(item => item.total)
+              borderWidth: 2,
+              data: data.map( item => item.total)
             }
           ]
         };

@@ -23,11 +23,14 @@ const routes = [
         path: "reportes",
         component: () => import("pages/ReporteACM.vue"),
       },
+      { path: "mecanico", component: () => import("pages/GestionMecanico.vue") },
+      { path: "programacion", component: () => import("pages/GestionProgramacion.vue") },
+      { path: "taller", component: () => import("pages/GestionTaller.vue") },
     ],
   },
   {
     path: "/",
-    component: () => import("pages/LoginForm.vue"),
+    component: () => import("pages/LoginFormv3.vue"),
   },
   // Always leave this as last one,
   // but you can also remove it
