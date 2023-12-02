@@ -165,7 +165,7 @@ export default {
             descripcion: this.servicioSeleccionado.label,
             costo: 0,
           };
-
+          this.$emit("agregarServicio", nuevoServicio);
           this.servicios.push(nuevoServicio);
           console.log("Servicio agregado", nuevoServicio);
         } else {

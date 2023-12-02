@@ -3,7 +3,7 @@
   <div class="factura-page">
     <div class="content-container">
       <h4 class="titulo">GENERAR FACTURA</h4>
-      <FacturaCabe />
+      <FacturaCab @agregarServicio="agregarServicio" />
       <div class="tabla">
         <ServiciosTable :servicios="servicios" />
       </div>
@@ -60,14 +60,14 @@
 </style>
 
 <script>
-import FacturaCabe from "components/Factura/FacturaCab.vue";
+import FacturaCab from "components/Factura/FacturaCab.vue";
 import ServiciosTable from "components/Factura/ServiciosTable.vue";
 import RepuestosTable from "components/Factura/RepuestosTable.vue";
 import TotalizadorFactura from "components/Factura/TotalizadorFactura.vue";
 
 export default {
   components: {
-    FacturaCabe,
+    FacturaCab,
     ServiciosTable,
     RepuestosTable,
     TotalizadorFactura,
@@ -76,6 +76,9 @@ export default {
     registrarFactura() {
       // Lógica para registrar la factura
       console.log("Factura registrada!");
+    },
+    agregarServicio(nuevoServicio) {
+      this.servicios.push(nuevoServicio);
     },
   },
   data() {
