@@ -7,7 +7,6 @@
           v-model="clienteSeleccionado"
           :options="clientes"
           label=" "
-          @input="actualizarFechaYNumeroFactura"
           class="select"
         />
       </div>
@@ -19,6 +18,14 @@
           :options="servicios"
           label=" "
           class="select"
+          :disable="!clienteSeleccionado"
+        />
+        <q-btn
+          color="primary"
+          icon="add"
+          @click="agregarServicio"
+          :disable="!servicioSeleccionado"
+          round
         />
       </div>
     </div>
@@ -54,28 +61,68 @@
 </style>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       numeroFactura: null,
       clienteSeleccionado: null,
       servicioSeleccionado: null,
-      repuestoSeleccionado: null,
       fecha: new Date().toISOString().split("T")[0],
-      clientes: [
-        { label: "Cliente 1", value: "cliente1" },
-        { label: "Cliente 2", value: "cliente2" },
-      ],
-      servicios: [
-        { label: "Servicio 1", value: "servicio1" },
-        { label: "Servicio 2", value: "servicio2" },
-      ],
-      repuestos: [
-        { label: "Repuesto 1", value: "repuesto1" },
-        { label: "Repuesto 2", value: "repuesto2" },
-      ],
+      clientes: [],
+      servicios: [],
     };
   },
-  methods: {},
+  watch: {
+    clienteSeleccionado: function (newClienteId, oldClienteId) {
+      console.log("Cliente seleccionado", newClienteId);
+      let clienteSeleccionado = newClienteId || oldClienteId;
+
+      // Obtener el valor de 'value' del objeto proxy
+      let valorClienteSeleccionado = clienteSeleccionado.value;
+      console.log("Valor de cliente seleccionado", valorClienteSeleccionado);
+      this.Clientes = response.data.map((Cliente) => cliente.clienteId);
+      const op = this.obtenerServiciosxClient(newClienteId);
+      console.log("id client csm", op);
+    },
+  },
+  created() {
+    this.obtenerClientes();
+  },
+  methods: {
+    obtenerClientes() {
+      axios
+        .get("http://localhost:5243/api/Cliente/GetAll")
+        .then((response) => {
+          this.clientes = response.data.map((cliente) => ({
+            label: `${cliente.clienteId} - ${cliente.nombre}`,
+            value: cliente.clienteId,
+          }));
+          this.servicios = response.data.map(
+            (servicio) => servicio.reparacionMantenimientoId
+          );
+          console.log("Clientes id", value);
+        })
+        .catch((error) => {
+          console.log("error al obtener clientes", error);
+        });
+    },
+    obtenerServiciosxClient(valorClienteSeleccionado) {
+      axios
+        .get(
+          `http://localhost:5243/api/RepMantenimiento/GetReparacByClientId?idClient=${valorClienteSeleccionado}`
+        )
+        .then((response) => {
+          this.servicios = response.data.map(
+            (servicio) => servicio.reparacionMantenimientoId
+          );
+          console.log("IDs de Servicios", this.servicios);
+        })
+
+        .catch((error) => {
+          console.log("error al obtener servicios", error);
+        });
+    },
+  },
 };
 </script>
