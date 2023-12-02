@@ -23,8 +23,18 @@ const routes = [
         path: "reportes",
         component: () => import("pages/ReporteACM.vue"),
       },
-      { path: "mecanico", component: () => import("pages/GestionMecanico.vue") },
-      { path: "programacion", component: () => import("pages/GestionProgramacion.vue") },
+      {
+        path: "historialFacturas",
+        component: () => import("pages/HistorialFactura.vue"),
+      },
+      {
+        path: "mecanico",
+        component: () => import("pages/GestionMecanico.vue"),
+      },
+      {
+        path: "programacion",
+        component: () => import("pages/GestionProgramacion.vue"),
+      },
       { path: "taller", component: () => import("pages/GestionTaller.vue") },
     ],
   },
