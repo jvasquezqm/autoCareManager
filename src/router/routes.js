@@ -15,6 +15,10 @@ const routes = [
         component: () => import("pages/GestionPropietario.vue"),
       },
       { path: "factura", component: () => import("pages/FacturaPage.vue") },
+      {
+        path: "inventario",
+        component: () => import("pages/GestionInventario.vue"),
+      },
     ],
   },
   {
