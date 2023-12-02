@@ -68,6 +68,7 @@ export default {
       numeroFactura: null,
       clienteSeleccionado: null,
       servicioSeleccionado: null,
+      repuestoSeleccionado: null,
       fecha: new Date().toISOString().split("T")[0],
       clientes: [],
       servicios: [],
@@ -75,15 +76,11 @@ export default {
   },
   watch: {
     clienteSeleccionado: function (newClienteId, oldClienteId) {
-      console.log("Cliente seleccionado", newClienteId);
-      let clienteSeleccionado = newClienteId || oldClienteId;
-
-      // Obtener el valor de 'value' del objeto proxy
-      let valorClienteSeleccionado = clienteSeleccionado.value;
-      console.log("Valor de cliente seleccionado", valorClienteSeleccionado);
-      this.Clientes = response.data.map((Cliente) => cliente.clienteId);
-      const op = this.obtenerServiciosxClient(newClienteId);
-      console.log("id client csm", op);
+      if (newClienteId) {
+        this.obtenerServiciosxClient(newClienteId);
+      } else {
+        this.servicios = [];
+      }
     },
   },
   created() {
@@ -98,27 +95,22 @@ export default {
             label: `${cliente.clienteId} - ${cliente.nombre}`,
             value: cliente.clienteId,
           }));
-          this.servicios = response.data.map(
-            (servicio) => servicio.reparacionMantenimientoId
-          );
-          console.log("Clientes id", value);
         })
         .catch((error) => {
           console.log("error al obtener clientes", error);
         });
     },
-    obtenerServiciosxClient(valorClienteSeleccionado) {
+    obtenerServiciosxClient(clienteId) {
       axios
         .get(
-          `http://localhost:5243/api/RepMantenimiento/GetReparacByClientId?idClient=${valorClienteSeleccionado}`
+          `http://localhost:5243/api/Servicio/GetServiciosxCliente?clienteId=${clienteId}`
         )
         .then((response) => {
-          this.servicios = response.data.map(
-            (servicio) => servicio.reparacionMantenimientoId
-          );
-          console.log("IDs de Servicios", this.servicios);
+          this.servicios = response.data.map((servicio) => ({
+            label: `${servicio.servicioId} - ${servicio.descripcion}`,
+            value: servicio.servicioId,
+          }));
         })
-
         .catch((error) => {
           console.log("error al obtener servicios", error);
         });
