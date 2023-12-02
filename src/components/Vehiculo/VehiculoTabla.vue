@@ -125,7 +125,7 @@ export default{
       try {
         const response = await axios.get('http://localhost:5243/api/Vehiculo/GetAll');
         this.datos = response.data;
-        console.log(this.datos)
+        //console.log(this.datos)
       } catch (error){
         console.error('Error al obtener datos: ',error);
       }

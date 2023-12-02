@@ -3,36 +3,21 @@
       <q-dialog v-model="mostrarModal">
         <q-card class="qcard-modal-edit">
           <q-card-section>
-            <div class="titulo">Agregar Vehiculo</div>
-            <!-- <q-input v-model="nuevoV.marca" label="Fabricante" class="custom-label"/> -->
+            <div class="titulo">Agregar Inventario</div>
+            <q-input v-model="nuevoIn.nombre" label="Nombre Producto" class="custom-label" />
+            <q-input v-model="nuevoIn.descripcion" label="Descripcion" class="custom-label" />
+            <!-- <q-input v-model="edicion.vehiculoCompatible" label="Vehiculo Compatible" class="custom-label" /> -->
             <q-select 
-                v-model="nuevoV.marca"
-                :options= "fab_vehiculos"
-                label="Fabricante"
+                v-model="nuevoIn.vehiculoCompatible"
+                :options= "comp_vehiculo"
+                label="Auto Compatible"
             />
-            <q-input v-model="nuevoV.modelo" label="Modelo" class="custom-label" />
-            <q-input v-model="nuevoV.anio" label="Año" class="custom-label" />
-            <!-- <q-select 
-                v-model="nuevoV.anio"
-                :options= generateYears(1994,2023)
-                label="Año"
-            /> -->
-            <q-input v-model="nuevoV.numeroPlaca" label="Número de Placa" class="custom-label" Placeholder="AAA123"/>
-            <!-- <q-input v-model="nuevoV.clienteId" label="Codigo Cliente" class="custom-label" /> -->
-            <!-- <q-input v-model="nuevoV.clienteId" label="Cliente" class="custom-label"> -->
-                <q-select
-                    v-model="nuevoV.clienteId"
-                    :options="clientes"
-                    option-value="clienteId"
-                    :option-label="option => `${option.nombre} ${option.apellido}`"
-                    label="Cliente"
-                    
-                />
-            <!-- </q-input> -->
+            <q-input v-model="nuevoIn.cantidadStock" label="Stock" class="custom-label" />
+            <q-input v-model="nuevoIn.precioUnitario" label="Precio Unidad" class="custom-label" />
 
             <br />
             <div class="buttons">
-              <q-btn @click="guardarnuevoV" label="Guardar" color="secondary" />
+              <q-btn @click="guardarnuevoIn" label="Guardar" color="secondary" />
               <q-btn @click="cerrarModal" label="Cancelar" color="red" />
             </div>
           </q-card-section>
@@ -83,28 +68,28 @@ export default{
       return {
 
         mostrarModal: false,
-        nuevoV: {
-            marca: '',
-            modelo: '',
-            anio: '',
-            numeroPlaca: '',
-            clienteId: '',
+        nuevoIn: {
+            nombre: '',
+            descripcion: '',
+            vehiculoCompatible: '',
+            cantidadStock: '',
+            precioUnitario: '',
 
         },
         clientes: [""],
-        fab_vehiculos: ["Kia", "Hyundai", "Honda", "Toyota", "Nissan"],
+        comp_vehiculo: ["Todos","Kia", "Hyundai", "Honda", "Toyota", "Nissan"],
         //opcionYear: generateYears(1994,2023),
       };
     },
 
 
     mounted() {
-        this.getClientes()
+        this.getDatos()
 
     },
     methods: {
 
-        abrirModalnuevoV() {
+        abrirModalnuevoIn() {
             this.mostrarModal = true;
         },
 
@@ -112,26 +97,26 @@ export default{
         cerrarModal() {
             this.mostrarModal = false;
             // Limpia los campos de edición
-            this.nuevoV = {
-                marca: '',
-                modelo: '',
-                anio: '',
-                numeroPlaca: '',
-                clienteId: '',
+            this.nuevoIn = {
+                nombre: '',
+                descripcion: '',
+                vehiculoCompatible: '',
+                cantidadStock: '',
+                precioUnitario: '',
                 // Limpia más propiedades según sea necesario
                 };
         },
 
         // Método para enviar al servidor
-        async guardarnuevoV() {
+        async guardarnuevoIn() {
         try {
-            let url = "http://localhost:5243/api/Vehiculo/Create"
+            let url = "http://localhost:5243/api/Inventario/Create"
             var data = {
-                marca: this.nuevoV.marca,
-                modelo: this.nuevoV.modelo,
-                anio: this.nuevoV.anio,
-                numeroPlaca: this.nuevoV.numeroPlaca,
-                clienteId: this.nuevoV.clienteId.clienteId
+                nombre: this.nuevoIn.nombre,
+                descripcion: this.nuevoIn.descripcion,
+                vehiculoCompatible: this.nuevoIn.vehiculoCompatible,
+                cantidadStock: this.nuevoIn.cantidadStock,
+                precioUnitario: this.nuevoIn.precioUnitario
             }
             console.log(data)
             //peticion post
@@ -158,30 +143,16 @@ export default{
         }
         },
 
-        async getClientes(){
+        async getDatos(){
             try {
-            const response = await axios.get('http://localhost:5243/api/Cliente/GetAll');
+            const response = await axios.get('http://localhost:5243/api/Inventario/GetAll');
             this.clientes = response.data;
             //console.log(this.clientes)
         } catch (error) {
             console.error('Error al obtener clientes:', error);
         }
-        },
-
-        generateYears(startYear, endYear) {
-          const options = [];
-          for (let year = startYear; year <= endYear; year++) {
-            options.push({
-              label: year.toString(),
-              value: year
-            });
-          }
-          return options;
-        },
-
-        placaToMayus(){
-          
         }
-},
+
+    },
 }
 </script>
