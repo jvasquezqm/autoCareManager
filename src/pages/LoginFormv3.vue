@@ -1,4 +1,11 @@
 <template>
+  <div>
+    <img
+      alt="Quasar logo"
+      src="https://i.pinimg.com/originals/fb/4c/ab/fb4cabe2bbe6d6eef9c057b6c94fe27a.jpg"
+      style="width: 200px; height: 200px; margin-left: 42%;"
+    >
+  </div>
   <div class="container">
       <input type="checkbox" id="flip">
       <div class="cover">
@@ -78,7 +85,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #2074d4;
+    background: #faf5f5;
     padding: 30px;
   }
   .container{
@@ -89,6 +96,7 @@
     padding: 40px 30px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.2);
     perspective: 2700px;
+    margin-left: 20%;
   }
   .container .cover{
     position: absolute;
