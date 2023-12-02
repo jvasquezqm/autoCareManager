@@ -93,7 +93,7 @@
                   <q-item-label>Generar Factura</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable to="/dashboard/histFact">
+              <q-item clickable to="/dashboard/historialFacturas">
                 <q-item-section avatar>
                   <q-avatar icon="history" color="primary" text-color="white" />
                 </q-item-section>
