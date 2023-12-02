@@ -20,6 +20,7 @@
           label=" "
           class="select"
           :disable="!clienteSeleccionado"
+          @input="seleccionarServicio"
         />
         <q-btn
           color="primary"
@@ -112,11 +113,69 @@ export default {
             label: `${servicio.descripcion}`,
             value: servicio.reparacionMantenimientoId,
           }));
+          console.log("Opciones de servicios:", this.servicios);
         })
         .catch((error) => {
           console.log("error al obtener servicios", error);
           console.log("clienteId pp", clienteId.value);
         });
+    },
+    seleccionarServicio() {
+      console.log("Método seleccionarServicio ejecutado");
+
+      const reparacionMantenimientoId = this.servicioSeleccionado
+        ? this.servicioSeleccionado.value
+        : null;
+      console.log("reparacionMantenimientoId:", reparacionMantenimientoId);
+
+      if (reparacionMantenimientoId) {
+        axios
+          .get(
+            `http://localhost:5243/api/RepMantenimiento/GetReparacMantIncServ?id=${reparacionMantenimientoId}`
+          )
+          .then((response) => {
+            console.log("Detalles del servicio", response.data);
+            const servicio = {
+              reparacionMantenimientoId:
+                response.data.reparacionMantenimientoId,
+              descripcion: response.data.descripcion,
+              costo: response.data.costo,
+            };
+            this.servicios.push(servicio);
+            console.log("Servicio agregado", servicio);
+
+            this.actualizarSubtotal();
+          })
+          .catch((error) => {
+            console.log("Error al obtener detalles del servicio", error);
+          });
+      }
+    },
+    agregarServicio() {
+      if (this.servicioSeleccionado) {
+        const servicioExistente = this.servicios.find(
+          (servicio) =>
+            servicio.reparacionMantenimientoId ===
+            this.servicioSeleccionado.value
+        );
+
+        if (!servicioExistente) {
+          const nuevoServicio = {
+            reparacionMantenimientoId: this.servicioSeleccionado.value,
+            descripcion: this.servicioSeleccionado.label,
+            costo: 0,
+          };
+
+          this.servicios.push(nuevoServicio);
+          console.log("Servicio agregado", nuevoServicio);
+        } else {
+          console.log("Este servicio ya fue agregado.");
+        }
+      }
+    },
+    seleccionarServicioDirectamente() {
+      console.log("Método seleccionarServicioDirectamente ejecutado");
+      this.seleccionarServicio();
     },
   },
 };
